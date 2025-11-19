@@ -3,18 +3,18 @@ export interface Starship {
   name: string;
   model: string;
   manufacturer: string;
-  costInCredits: string;
+  cost_in_credits: string;
   length: string;
-  maxAtmospheringSpeed: string;
+  max_atmosphering_speed: string;
   crew: string;
   passengers: string;
-  cargoCapacity: string;
+  cargo_capacity: string;
   consumables: string;
-  hyperdriveRating: string;
-  mglt: string;
-  starshipClass: string;
-  swapiCreated: string;
-  swapiEdited: string;
-  swapiUrl: string;
+  hyperdrive_rating: string;
+  MGLT: string;
+  starship_class: string;
+  created: string;
+  edited: string;
+  url: string;
   createdAt: string;
 }

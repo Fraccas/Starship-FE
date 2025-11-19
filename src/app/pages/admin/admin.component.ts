@@ -48,9 +48,9 @@ export class AdminComponent implements OnInit {
       name: '',
       model: '',
       manufacturer: '',
-      starshipClass: '',
-      hyperdriveRating: '',
-      maxAtmospheringSpeed: '',
+      starship_class: '',
+      hyperdrive_rating: '',
+      max_atmosphering_speed: '',
       crew: '',
       passengers: ''
     };

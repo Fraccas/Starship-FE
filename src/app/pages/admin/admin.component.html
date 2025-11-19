@@ -24,7 +24,7 @@
         <tr *ngFor="let ship of starships">
           <td>{{ ship.name }}</td>
           <td>{{ ship.model }}</td>
-          <td>{{ ship.starshipClass }}</td>
+          <td>{{ ship.starship_class }}</td>
           <td>{{ ship.manufacturer }}</td>
           <td class="actions">
             <button class="button-ghost" (click)="startEdit(ship)">Edit</button>
@@ -58,18 +58,18 @@
         </div>
 
         <div class="form-field">
-          <label for="starshipClass">Class</label>
-          <input id="starshipClass" [(ngModel)]="formModel.starshipClass" name="starshipClass">
+          <label for="starship_class">Class</label>
+          <input id="starship_class" [(ngModel)]="formModel.starship_class" name="starship_class">
         </div>
 
         <div class="form-field">
-          <label for="hyperdriveRating">Hyperdrive Rating</label>
-          <input id="hyperdriveRating" [(ngModel)]="formModel.hyperdriveRating" name="hyperdriveRating">
+          <label for="hyperdrive_rating">Hyperdrive Rating</label>
+          <input id="hyperdrive_rating" [(ngModel)]="formModel.hyperdrive_rating" name="hyperdrive_rating">
         </div>
 
         <div class="form-field">
-          <label for="maxAtmospheringSpeed">Max Atmosphering Speed</label>
-          <input id="maxAtmospheringSpeed" [(ngModel)]="formModel.maxAtmospheringSpeed" name="maxAtmospheringSpeed">
+          <label for="max_atmosphering_speed">Max Atmosphering Speed</label>
+          <input id="max_atmosphering_speed" [(ngModel)]="formModel.max_atmosphering_speed" name="max_atmosphering_speed">
         </div>
 
         <div class="form-field">

@@ -5,7 +5,7 @@ import { FavoriteStarship } from '../models/favorite-starship';
 @Injectable({ providedIn: 'root' })
 export class FavoriteStarshipService {
 
-  private api = 'https://localhost:7233/api/favorites';
+  private api = 'https://localhost:7233/api/favoritestarship';
 
   constructor(private http: HttpClient) {}
 
