@@ -1,0 +1,43 @@
+.loading {
+  padding: 24px;
+  color: #a9b9d5;
+}
+
+.empty {
+  padding: 24px;
+  text-align: center;
+  display: grid;
+  gap: 12px;
+  place-items: center;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(90, 208, 255, 0.5);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+  }
+
+  h3 {
+    margin: 0;
+    color: #7fd7ff;
+  }
+
+  .button-ghost {
+    width: 100%;
+    margin-top: 12px;
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}

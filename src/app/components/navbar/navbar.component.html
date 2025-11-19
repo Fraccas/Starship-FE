@@ -1,33 +1,28 @@
-<nav class="navbar">
-
-  <div class="left">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-      Home
-    </a>
-
-    <a routerLink="/starships" routerLinkActive="active">
-      Starships
-    </a>
-
-    <a routerLink="/favorites" routerLinkActive="active" *ngIf="auth.isLoggedIn()">
-      Favorites
-    </a>
-
-    <a routerLink="/admin" routerLinkActive="active" *ngIf="auth.isAdmin()">
-      Admin
-    </a>
+<nav class="navbar glass-panel">
+  <div class="brand">
+    <div class="logo">🚀</div>
+    <div class="title">
+      <span class="name">Starship Explorer</span>
+      <small class="tagline">Navigate the galaxy</small>
+    </div>
   </div>
 
-  <div class="right">
+  <div class="links">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/starships" routerLinkActive="active">Starships</a>
+    <a routerLink="/favorites" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Favorites</a>
+    <a routerLink="/admin" routerLinkActive="active" *ngIf="auth.isAdmin()">Admin</a>
+  </div>
+
+  <div class="session">
     <ng-container *ngIf="auth.isLoggedIn(); else loggedOut">
       <span class="user-email">{{ auth.getUserEmail() }}</span>
-      <button (click)="logout()">Logout</button>
+      <button class="button-ghost" (click)="logout()">Logout</button>
     </ng-container>
 
     <ng-template #loggedOut>
-      <a routerLink="/login">Login</a>
-      <a routerLink="/register">Register</a>
+      <a routerLink="/login" class="button-ghost">Login</a>
+      <a routerLink="/register" class="button-primary">Register</a>
     </ng-template>
   </div>
-
 </nav>

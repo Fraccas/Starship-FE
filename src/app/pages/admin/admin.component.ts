@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { StarshipService } from '../../core/services/starship.service';
 import { Starship } from '../../core/models/starship';
 
@@ -68,9 +68,9 @@ export class AdminComponent implements OnInit {
     this.formModel = {};
   }
 
-  save() {
-    if (!this.formModel.name || !this.formModel.model) {
-      alert('Name and model are required.');
+  save(form?: NgForm) {
+    if (form && form.invalid) {
+      form.control.markAllAsTouched();
       return;
     }
 

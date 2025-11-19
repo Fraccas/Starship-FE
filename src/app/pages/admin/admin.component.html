@@ -1,82 +1,92 @@
-<h2>Admin: Manage Starships</h2>
+<div class="content-shell">
+  <div class="section-heading"><span class="dot"></span><h2>Admin: Manage Starships</h2></div>
+  <p class="subtle-text">Create, edit, and prune the fleet without leaving the page.</p>
 
-<button class="create-btn" (click)="startCreate()">+ Create New Starship</button>
+  <div class="toolbar">
+    <button class="button-primary" (click)="startCreate()">+ Create New Starship</button>
+  </div>
 
-<div *ngIf="loading">Loading...</div>
+  <div *ngIf="loading" class="loading">Loading fleet...</div>
 
-<table *ngIf="!loading">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Model</th>
-      <th>Class</th>
-      <th>Manufacturer</th>
-      <th style="width: 160px;"></th>
-    </tr>
-  </thead>
+  <div class="glass-panel table-wrap" *ngIf="!loading">
+    <table class="table-shell">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Model</th>
+          <th>Class</th>
+          <th>Manufacturer</th>
+          <th style="width: 200px;"></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <tr *ngFor="let ship of starships">
-      <td>{{ ship.name }}</td>
-      <td>{{ ship.model }}</td>
-      <td>{{ ship.starshipClass }}</td>
-      <td>{{ ship.manufacturer }}</td>
-      <td>
-        <button (click)="startEdit(ship)">Edit</button>
-        <button (click)="delete(ship.id)" class="danger">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+      <tbody>
+        <tr *ngFor="let ship of starships">
+          <td>{{ ship.name }}</td>
+          <td>{{ ship.model }}</td>
+          <td>{{ ship.starshipClass }}</td>
+          <td>{{ ship.manufacturer }}</td>
+          <td class="actions">
+            <button class="button-ghost" (click)="startEdit(ship)">Edit</button>
+            <button class="button-ghost danger" (click)="delete(ship.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<!-- INLINE CREATE/EDIT FORM -->
-<div class="editor" *ngIf="editing">
-  <h3>{{ isNew ? 'Create Starship' : 'Edit Starship' }}</h3>
+  <div class="editor glass-panel" *ngIf="editing">
+    <div class="section-heading"><span class="dot"></span><h3>{{ isNew ? 'Create Starship' : 'Edit Starship' }}</h3></div>
 
-  <form (ngSubmit)="save()">
-    <label>
-      Name
-      <input [(ngModel)]="formModel.name" name="name" required>
-    </label>
+    <form #shipForm="ngForm" (ngSubmit)="save(shipForm)" novalidate>
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input id="name" [(ngModel)]="formModel.name" name="name" required #nameCtrl="ngModel">
+          <div class="form-hint" *ngIf="nameCtrl.invalid && nameCtrl.touched">Name is required.</div>
+        </div>
 
-    <label>
-      Model
-      <input [(ngModel)]="formModel.model" name="model" required>
-    </label>
+        <div class="form-field">
+          <label for="model">Model</label>
+          <input id="model" [(ngModel)]="formModel.model" name="model" required #modelCtrl="ngModel">
+          <div class="form-hint" *ngIf="modelCtrl.invalid && modelCtrl.touched">Model is required.</div>
+        </div>
 
-    <label>
-      Manufacturer
-      <input [(ngModel)]="formModel.manufacturer" name="manufacturer">
-    </label>
+        <div class="form-field">
+          <label for="manufacturer">Manufacturer</label>
+          <input id="manufacturer" [(ngModel)]="formModel.manufacturer" name="manufacturer">
+        </div>
 
-    <label>
-      Class
-      <input [(ngModel)]="formModel.starshipClass" name="starshipClass">
-    </label>
+        <div class="form-field">
+          <label for="starshipClass">Class</label>
+          <input id="starshipClass" [(ngModel)]="formModel.starshipClass" name="starshipClass">
+        </div>
 
-    <label>
-      Hyperdrive Rating
-      <input [(ngModel)]="formModel.hyperdriveRating" name="hyperdriveRating">
-    </label>
+        <div class="form-field">
+          <label for="hyperdriveRating">Hyperdrive Rating</label>
+          <input id="hyperdriveRating" [(ngModel)]="formModel.hyperdriveRating" name="hyperdriveRating">
+        </div>
 
-    <label>
-      Max Atmosphering Speed
-      <input [(ngModel)]="formModel.maxAtmospheringSpeed" name="maxAtmospheringSpeed">
-    </label>
+        <div class="form-field">
+          <label for="maxAtmospheringSpeed">Max Atmosphering Speed</label>
+          <input id="maxAtmospheringSpeed" [(ngModel)]="formModel.maxAtmospheringSpeed" name="maxAtmospheringSpeed">
+        </div>
 
-    <label>
-      Crew
-      <input [(ngModel)]="formModel.crew" name="crew">
-    </label>
+        <div class="form-field">
+          <label for="crew">Crew</label>
+          <input id="crew" [(ngModel)]="formModel.crew" name="crew">
+        </div>
 
-    <label>
-      Passengers
-      <input [(ngModel)]="formModel.passengers" name="passengers">
-    </label>
+        <div class="form-field">
+          <label for="passengers">Passengers</label>
+          <input id="passengers" [(ngModel)]="formModel.passengers" name="passengers">
+        </div>
+      </div>
 
-    <div class="buttons">
-      <button type="submit">{{ isNew ? 'Create' : 'Save' }}</button>
-      <button type="button" (click)="cancelEdit()">Cancel</button>
-    </div>
-  </form>
+      <div class="buttons">
+        <button class="button-primary" type="submit" [disabled]="shipForm.invalid">{{ isNew ? 'Create' : 'Save' }}</button>
+        <button type="button" class="button-ghost" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>
