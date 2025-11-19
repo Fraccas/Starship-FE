@@ -4,11 +4,13 @@ import { StarshipService } from '../../core/services/starship.service';
 import { Starship } from '../../core/models/starship';
 import { FavoriteStarshipService } from '../../core/services/favorite-starship.service';
 import { AuthService } from '../../core/services/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-starships',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, FormsModule],
   templateUrl: './starships.component.html',
   styleUrl: './starships.component.scss'
 })
@@ -20,7 +22,10 @@ export class StarshipsComponent implements OnInit {
   modalTitle = signal<string | null>(null);
   modalMessage = signal<string | null>(null);
 
-  // NEW filtering + sorting signals
+  shipQuestions: { [id: number]: string } = {};
+  aiAnswers: { [id: number]: string } = {};
+
+  // filtering + sorting signals
   searchTerm = signal('');
   sortOption = signal('name-asc');
 
@@ -67,7 +72,8 @@ export class StarshipsComponent implements OnInit {
   constructor(
     private starshipService: StarshipService,
     private favorites: FavoriteStarshipService,
-    public auth: AuthService
+    public auth: AuthService,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -87,6 +93,22 @@ export class StarshipsComponent implements OnInit {
     });
   }
 
+  askAi(id: number, name: string) {
+    const question = this.shipQuestions[id]?.trim();
+    if (!question) return;
+
+    this.aiAnswers[id] = "Thinking...";
+
+    this.http.post<any>("https://localhost:7233/api/ai/starship-question", {
+      starshipId: id,
+      starshipName: name,
+      question
+    })
+      .subscribe({
+        next: res => this.aiAnswers[id] = res.answer,
+        error: () => this.aiAnswers[id] = "AI failed to answer."
+      });
+  }
 
   openModal(title: string, message: string) {
     this.modalTitle.set(title);

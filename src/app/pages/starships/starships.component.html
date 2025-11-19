@@ -43,6 +43,17 @@
         Add to Favorites
       </button>
       <p *ngIf="!auth.isLoggedIn()" class="subtle-text">Login to save this ship to your hangar.</p>
+
+      <div class="ai-section" *ngIf="auth.isLoggedIn()">
+        <input type="text" placeholder="Ask about {{ ship.name }}..." [(ngModel)]="shipQuestions[ship.id]" />
+        <button class="button-ghost" (click)="askAi(ship.id, ship.name)">
+          Ask AI
+        </button>
+
+        <p class="ai-answer" *ngIf="aiAnswers[ship.id]">
+          {{ aiAnswers[ship.id] }}
+        </p>
+      </div>
     </div>
   </div>
 </div>
