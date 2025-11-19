@@ -1,59 +1,130 @@
-# StarshipApp
+README.md
+# Starship Explorer (Frontend)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.1.
+This is the Angular frontend for **Starship Explorer**, an application for browsing, favoriting, and managing Star Wars–style starships. It connects to an ASP.NET Core Web API backend and uses modern Angular standalone components, JWT authentication, and a responsive UI with a starfield background.
 
-## Development server
+---
 
-To start a local development server, run:
+## Features
 
-```bash
+### Authentication
+- User registration and login  
+- JWT-based authentication  
+- Automatic token attachment via interceptor  
+- Role support (User, Admin)
+
+### Starships
+- Fetch starship list from backend  
+- Search and filter starships  
+- Favorite/unfavorite starships  
+- Detailed starship info
+
+### Favorites Page
+- Shows only the user’s saved favorites  
+- Requires authentication  
+- Uses backend-stored favorites
+
+### Admin Page
+- Admin-only route  
+- View and manage user data (if enabled on backend)
+
+### UI/UX
+- Modern layout with responsive design  
+- Glass-style navigation bar  
+- Animated starfield background  
+- Clean minimalist theme
+
+---
+
+## Tech Stack
+
+### Frontend
+- Angular 17+ (Standalone Components)
+- TypeScript
+- Vite
+- SCSS
+- Angular Router
+- HttpClient + Interceptors
+
+### Backend (Not included in this repo)
+- ASP.NET Core Web API  
+- Entity Framework Core  
+- Identity + JWT  
+- SQL Server  
+- Models: Starship, FavoriteStarship
+
+---
+
+## Getting Started
+
+### Install dependencies
+
+
+npm install
+
+
+### Run development server
+
+
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+Application runs at:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-```bash
-ng generate component component-name
-```
+http://localhost:4200
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-```bash
-ng generate --help
-```
+### Backend Requirements
+The frontend expects the backend API to run at:
 
-## Building
 
-To build the project run:
+https://localhost:7045
 
-```bash
-ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## Environment Setup
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Create:
 
-```bash
+`src/environments/environment.ts`
+```ts
+export const environment = {
+  apiUrl: 'https://localhost:7045/api'
+};
+
+Project Structure
+src/
+ ├── app/
+ │   ├── components/
+ │   │   └── navbar/
+ │   ├── pages/
+ │   │   ├── home/
+ │   │   ├── login/
+ │   │   ├── register/
+ │   │   ├── starships/
+ │   │   ├── favorites/
+ │   │   └── admin/
+ │   ├── services/
+ │   ├── guards/
+ │   └── app.routes.ts
+ ├── styles.scss
+ └── index.html
+
+Authentication Flow
+
+User logs in
+
+Backend returns JWT
+
+Token stored in localStorage
+
+Interceptor attaches Authorization: Bearer <token>
+
+Guards protect authenticated/admin routes
+
+Navbar updates based on login state
+
+Testing
 ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
