@@ -6,17 +6,8 @@ export const AdminGuard = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  const token = auth.token();
-  if (!token) return false;
-
-  const payload = JSON.parse(atob(token.split('.')[1]));
-  const roles = payload["role"] || payload["roles"];
-
-  const isAdmin = Array.isArray(roles)
-    ? roles.includes("Admin")
-    : roles === "Admin";
-
-  if (!isAdmin) {
+  // isLoggedIn() now also checks expiration
+  if (!auth.isLoggedIn() || !auth.isAdmin()) {
     router.navigate(['/']);
     return false;
   }

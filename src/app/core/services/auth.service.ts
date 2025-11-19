@@ -5,18 +5,22 @@ import { jwtDecode } from 'jwt-decode';
 
 export interface DecodedToken {
   email: string;
-  role: string;
   exp: number;
+  role?: string | string[];
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private api = 'https://localhost:7233/api/auth';
-  
+
+  // Hold raw JWT
   token = signal<string | null>(localStorage.getItem('token'));
 
   constructor(private http: HttpClient) {}
 
+  // ------------------------------------------------------------
+  // AUTH REQUESTS
+  // ------------------------------------------------------------
   login(email: string, password: string) {
     return this.http.post<LoginResponse>(`${this.api}/login`, { email, password });
   }
@@ -35,22 +39,36 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  isLoggedIn() {
-    return this.token() !== null;
-  }
-
-  /** ------------------------------------------------------------------
-   * Decode token helpers
-   * ------------------------------------------------------------------*/
+  // ------------------------------------------------------------
+  // DECODE & VALIDATE TOKEN
+  // ------------------------------------------------------------
   private decodeToken(): DecodedToken | null {
-    const t = this.token();
-    if (!t) return null;
+    const raw = this.token();
+    if (!raw) return null;
 
     try {
-      return jwtDecode<DecodedToken>(t);
+      const decoded = jwtDecode<DecodedToken>(raw);
+
+      // Validate expiration
+      const now = Math.floor(Date.now() / 1000);
+      if (decoded.exp && decoded.exp < now) {
+        this.logout();
+        return null;
+      }
+
+      return decoded;
     } catch {
+      // Invalid / malformed token
+      this.logout();
       return null;
     }
+  }
+
+  // ------------------------------------------------------------
+  // PUBLIC HELPERS
+  // ------------------------------------------------------------
+  isLoggedIn(): boolean {
+    return this.decodeToken() !== null;
   }
 
   getUserEmail(): string {
@@ -58,6 +76,15 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    return this.decodeToken()?.role === 'Admin';
+    const decoded = this.decodeToken();
+    if (!decoded) return false;
+
+    const roleValue = decoded.role;
+
+    if (Array.isArray(roleValue)) {
+      return roleValue.includes("Admin");
+    }
+
+    return roleValue === "Admin";
   }
 }
