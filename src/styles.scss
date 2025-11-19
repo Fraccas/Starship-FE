@@ -19,10 +19,11 @@ app-root, app-home, app-navbar {
 
 /* 🌌 Soft space gradient behind everything */
 body {
-  background: radial-gradient(circle at 20% 20%, rgba(57, 101, 255, 0.25), transparent 35%),
-              radial-gradient(circle at 80% 10%, rgba(255, 86, 196, 0.18), transparent 30%),
-              radial-gradient(circle at 50% 70%, rgba(93, 253, 255, 0.18), transparent 25%),
-              #050915;
+  background: radial-gradient(circle at 20% 20%, rgba(57, 101, 255, 0.2), transparent 32%),
+              radial-gradient(circle at 82% 14%, rgba(255, 86, 196, 0.14), transparent 28%),
+              radial-gradient(circle at 46% 78%, rgba(93, 253, 255, 0.14), transparent 24%),
+              radial-gradient(120% 120% at 50% 50%, rgba(255, 255, 255, 0.03), transparent 60%),
+              #04060f;
   background-attachment: fixed;
   min-height: 100vh;
 }
@@ -39,6 +40,8 @@ body {
   height: 2000px; /* scroll animation height */
   overflow: hidden;
   z-index: -1;
+  opacity: 0.85;
+  mix-blend-mode: screen;
 }
 
 /* ⭐ Layer 1 — Small stars */
@@ -55,8 +58,16 @@ body {
     800px 1900px #fff,
     1000px 1100px #fff,
     1200px 450px #fff,
-    1400px 1700px #fff;
-  animation: animStar 60s linear infinite;
+    1400px 1700px #fff,
+    1600px 300px #fff,
+    1800px 1450px #fff,
+    2000px 600px #fff,
+    2200px 1700px #fff,
+    2400px 850px #fff,
+    2600px 1900px #fff,
+    2800px 1150px #fff,
+    3000px 300px #fff;
+  animation: animStar 65s linear infinite, twinkle 4.2s ease-in-out infinite alternate;
 }
 
 .stars::after {
@@ -80,8 +91,14 @@ body {
     400px 900px #fff,
     600px 1300px #fff,
     900px 1700px #fff,
-    1200px 500px #fff;
-  animation: animStar 90s linear infinite;
+    1200px 500px #fff,
+    1450px 1050px #fff,
+    1700px 300px #fff,
+    1950px 1750px #fff,
+    2150px 750px #fff,
+    2450px 1400px #fff,
+    2700px 450px #fff;
+  animation: animStar 95s linear infinite, twinkle 5s ease-in-out infinite alternate;
 }
 
 .stars2::after {
@@ -103,8 +120,11 @@ body {
     150px 300px #fff,
     400px 800px #fff,
     700px 1400px #fff,
-    1000px 1800px #fff;
-  animation: animStar 140s linear infinite;
+    1000px 1800px #fff,
+    1350px 1200px #fff,
+    1700px 400px #fff,
+    2050px 1600px #fff;
+  animation: animStar 140s linear infinite, twinkle 6.5s ease-in-out infinite alternate;
 }
 
 .stars3::after {
@@ -121,6 +141,12 @@ body {
 @keyframes animStar {
   from { transform: translateY(0); }
   to   { transform: translateY(-2000px); }
+}
+
+@keyframes twinkle {
+  from { opacity: 0.55; }
+  50%  { opacity: 0.95; filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4)); }
+  to   { opacity: 0.65; }
 }
 
 /* ⭐ Page container spacing */
