@@ -1,0 +1,24 @@
+<h2>Your Favorite Starships</h2>
+
+<div *ngIf="loading">Loading...</div>
+
+<div *ngIf="!loading && favorites.length === 0">
+  <p>You don't have any favorites yet.</p>
+</div>
+
+<div class="grid" *ngIf="favorites.length > 0">
+  <div class="card" *ngFor="let fav of favorites">
+    <h3>{{ fav.starship.name }}</h3>
+
+    <p><strong>Nickname:</strong> {{ fav.nickname || '—' }}</p>
+    <p><strong>Notes:</strong> {{ fav.notes || '—' }}</p>
+
+    <p><strong>Class:</strong> {{ fav.starship.starshipClass }}</p>
+    <p><strong>Model:</strong> {{ fav.starship.model }}</p>
+    <p><strong>Manufacturer:</strong> {{ fav.starship.manufacturer }}</p>
+
+    <button (click)="removeFavorite(fav.id)">
+      Remove from Favorites
+    </button>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<nav class="navbar">
+
+  <div class="left">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      Home
+    </a>
+
+    <a routerLink="/starships" routerLinkActive="active">
+      Starships
+    </a>
+
+    <a routerLink="/favorites" routerLinkActive="active" *ngIf="auth.isLoggedIn()">
+      Favorites
+    </a>
+
+    <a routerLink="/admin" routerLinkActive="active" *ngIf="auth.isAdmin()">
+      Admin
+    </a>
+  </div>
+
+  <div class="right">
+    <ng-container *ngIf="auth.isLoggedIn(); else loggedOut">
+      <span class="user-email">{{ auth.getUserEmail() }}</span>
+      <button (click)="logout()">Logout</button>
+    </ng-container>
+
+    <ng-template #loggedOut>
+      <a routerLink="/login">Login</a>
+      <a routerLink="/register">Register</a>
+    </ng-template>
+  </div>
+
+</nav>

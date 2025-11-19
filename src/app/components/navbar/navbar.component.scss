@@ -1,0 +1,44 @@
+.navbar {
+  height: 60px;
+  padding: 0 25px;
+  background: rgba(0, 0, 0, 0.55);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+
+  color: #d9e2ef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  color: #dee2e7;
+  font-weight: 500;
+  margin-right: 20px;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.navbar a:hover {
+  color: #ffffff;
+}
+
+.navbar .active {
+  color: #4aa3ff;
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(80,160,255,0.7);
+}
+
+.navbar button {
+  background: #4aa3ff;
+  border: none;
+  padding: 8px 14px;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.15s ease-in-out;
+}
+
+.navbar button:hover {
+  background: #74b8ff;
+}
