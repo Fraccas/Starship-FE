@@ -1,29 +1,45 @@
 <div class="content-shell">
-  <div class="section-heading"><span class="dot"></span><h2>Starships</h2></div>
-  <p class="subtle-text">A curated list of vessels pulled straight from the database. Tap a card to learn more and favorite the ones that inspire you.</p>
+  <div class="section-heading"><span class="dot"></span>
+    <h2>Starships</h2>
+  </div>
+  <p class="subtle-text">A curated list of vessels pulled straight from the database. Tap a card to learn more and
+    favorite the ones that inspire you.</p>
 
   <div *ngIf="loading" class="loading">Loading starships...</div>
 
+  <div class="filter-bar glass-panel">
+    <input #searchBox type="text" placeholder="Search starships..." (input)="searchTerm.set(searchBox.value)" />
+
+    <select #sortBox (change)="sortOption.set(sortBox.value)">
+      <option value="name-asc">Name (A → Z)</option>
+      <option value="name-desc">Name (Z → A)</option>
+      <option value="crew-asc">Crew (Low → High)</option>
+      <option value="crew-desc">Crew (High → Low)</option>
+      <option value="hyperdrive-asc">Hyperdrive (Slow → Fast)</option>
+      <option value="hyperdrive-desc">Hyperdrive (Fast → Slow)</option>
+    </select>
+
+  </div>
+
+
+
   <div class="card-grid" *ngIf="!loading">
-    <div class="card glass-panel" *ngFor="let ship of starships">
+    <div class="card glass-panel" *ngFor="let ship of filteredStarships()">
       <div class="card-header">
         <h3>{{ ship.name }}</h3>
-        <span class="badge">{{ ship.starshipClass || 'Classified' }}</span>
+        <span class="badge">{{ ship.starship_class || 'Classified' }}</span>
       </div>
 
       <p><strong>Model:</strong> {{ ship.model }}</p>
       <p><strong>Manufacturer:</strong> {{ ship.manufacturer }}</p>
 
       <div class="spec-row">
-        <div><small>Hyperdrive</small><span>{{ ship.hyperdriveRating || '—' }}</span></div>
+        <div><small>Hyperdrive</small><span>{{ ship.hyperdrive_rating || '—' }}</span></div>
         <div><small>Crew</small><span>{{ ship.crew || '—' }}</span></div>
         <div><small>Passengers</small><span>{{ ship.passengers || '—' }}</span></div>
       </div>
 
-      <button
-        class="button-primary"
-        *ngIf="auth.isLoggedIn()"
-        (click)="addFavorite(ship.id)">
+      <button class="button-primary" *ngIf="auth.isLoggedIn()" (click)="addFavorite(ship.id)">
         Add to Favorites
       </button>
       <p *ngIf="!auth.isLoggedIn()" class="subtle-text">Login to save this ship to your hangar.</p>

@@ -54,3 +54,19 @@
   width: 100%;
   margin-top: 6px;
 }
+
+.filter-bar {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+
+  input, select {
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
+  }
+}

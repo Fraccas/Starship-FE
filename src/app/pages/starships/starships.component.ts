@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { StarshipService } from '../../core/services/starship.service';
 import { Starship } from '../../core/models/starship';
@@ -17,6 +17,50 @@ export class StarshipsComponent implements OnInit {
   starships: Starship[] = [];
   loading = true;
 
+  // NEW filtering + sorting signals
+  searchTerm = signal('');
+  sortOption = signal('name-asc');
+
+  // Computed filtered + sorted list
+  filteredStarships = computed(() => {
+    let list = [...this.starships];
+
+    // Filter by search string
+    const term = this.searchTerm().toLowerCase();
+    if (term) {
+      list = list.filter(s =>
+        (s.name?.toLowerCase().includes(term)) ||
+        (s.model?.toLowerCase().includes(term)) ||
+        (s.starship_class?.toLowerCase().includes(term)) ||
+        (s.manufacturer?.toLowerCase().includes(term))
+      );
+    }
+
+    // Sort options
+    switch (this.sortOption()) {
+      case 'name-asc':
+        list.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'name-desc':
+        list.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case 'crew-asc':
+        list.sort((a, b) => (Number(a.crew) || 0) - (Number(b.crew) || 0));
+        break;
+      case 'crew-desc':
+        list.sort((a, b) => (Number(b.crew) || 0) - (Number(a.crew) || 0));
+        break;
+      case 'hyperdrive-asc':
+        list.sort((a, b) => (Number(a.hyperdrive_rating) || 0) - (Number(b.hyperdrive_rating) || 0));
+        break;
+      case 'hyperdrive-desc':
+        list.sort((a, b) => (Number(b.hyperdrive_rating) || 0) - (Number(a.hyperdrive_rating) || 0));
+        break;
+    }
+
+    return list;
+  });
+
   constructor(
     private starshipService: StarshipService,
     private favorites: FavoriteStarshipService,
@@ -29,10 +73,7 @@ export class StarshipsComponent implements OnInit {
         this.starships = res;
         this.loading = false;
       },
-      error: (err: any) => {
-        console.error(err);
-        this.loading = false;
-      }
+      error: () => this.loading = false
     });
   }
 
