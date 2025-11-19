@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class StarshipService {
-  private api = 'https://localhost:7233/api/Starship';
+  private api = 'https://localhost:7233/api/starship';
 
   constructor(private http: HttpClient) {}
 

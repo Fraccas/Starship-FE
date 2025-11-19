@@ -1,5 +1,7 @@
 <div class="content-shell">
-  <div class="section-heading"><span class="dot"></span><h2>Admin: Manage Starships</h2></div>
+  <div class="section-heading"><span class="dot"></span>
+    <h2>Admin: Manage Starships</h2>
+  </div>
   <p class="subtle-text">Create, edit, and prune the fleet without leaving the page.</p>
 
   <div class="toolbar">
@@ -35,11 +37,20 @@
     </table>
   </div>
 
-  <div class="editor glass-panel" *ngIf="editing">
-    <div class="section-heading"><span class="dot"></span><h3>{{ isNew ? 'Create Starship' : 'Edit Starship' }}</h3></div>
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" *ngIf="editing" (click)="cancelEdit()"></div>
+
+  <!-- Centered Modal -->
+  <div class="modal glass-panel" *ngIf="editing">
+    <div class="section-heading">
+      <span class="dot"></span>
+      <h3>{{ isNew ? 'Create Starship' : 'Edit Starship' }}</h3>
+    </div>
 
     <form #shipForm="ngForm" (ngSubmit)="save(shipForm)" novalidate>
       <div class="form-grid">
+        <!-- (keep all your existing form fields exactly as-is) -->
+        <!-- BEGIN COPY from your file -->
         <div class="form-field">
           <label for="name">Name</label>
           <input id="name" [(ngModel)]="formModel.name" name="name" required #nameCtrl="ngModel">
@@ -69,7 +80,8 @@
 
         <div class="form-field">
           <label for="max_atmosphering_speed">Max Atmosphering Speed</label>
-          <input id="max_atmosphering_speed" [(ngModel)]="formModel.max_atmosphering_speed" name="max_atmosphering_speed">
+          <input id="max_atmosphering_speed" [(ngModel)]="formModel.max_atmosphering_speed"
+            name="max_atmosphering_speed">
         </div>
 
         <div class="form-field">
@@ -81,12 +93,17 @@
           <label for="passengers">Passengers</label>
           <input id="passengers" [(ngModel)]="formModel.passengers" name="passengers">
         </div>
+        <!-- END COPY -->
       </div>
 
       <div class="buttons">
-        <button class="button-primary" type="submit" [disabled]="shipForm.invalid">{{ isNew ? 'Create' : 'Save' }}</button>
+        <button class="button-primary" type="submit" [disabled]="shipForm.invalid">
+          {{ isNew ? 'Create' : 'Save' }}
+        </button>
+
         <button type="button" class="button-ghost" (click)="cancelEdit()">Cancel</button>
       </div>
     </form>
   </div>
+
 </div>

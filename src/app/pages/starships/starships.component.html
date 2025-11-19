@@ -46,3 +46,16 @@
     </div>
   </div>
 </div>
+
+<!-- Overlay -->
+<div class="modal-overlay" *ngIf="modalMessage()" (click)="closeModal()"></div>
+
+<!-- Modal -->
+<div class="modal glass-panel" *ngIf="modalMessage()">
+  <h3>{{ modalTitle() }}</h3>
+  <p>{{ modalMessage() }}</p>
+
+  <div class="buttons">
+    <button class="button-primary" (click)="closeModal()">OK</button>
+  </div>
+</div>

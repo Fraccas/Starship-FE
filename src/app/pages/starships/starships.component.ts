@@ -17,6 +17,9 @@ export class StarshipsComponent implements OnInit {
   starships: Starship[] = [];
   loading = true;
 
+  modalTitle = signal<string | null>(null);
+  modalMessage = signal<string | null>(null);
+
   // NEW filtering + sorting signals
   searchTerm = signal('');
   sortOption = signal('name-asc');
@@ -65,7 +68,7 @@ export class StarshipsComponent implements OnInit {
     private starshipService: StarshipService,
     private favorites: FavoriteStarshipService,
     public auth: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.starshipService.getAll().subscribe({
@@ -79,8 +82,19 @@ export class StarshipsComponent implements OnInit {
 
   addFavorite(id: number) {
     this.favorites.addFavorite(id).subscribe({
-      next: () => alert('Added to favorites!'),
-      error: () => alert('Failed to add favorite.')
+      next: () => this.openModal("Success", "Starship added to favorites!"),
+      error: () => this.openModal("Error", "Failed to add favorite.")
     });
+  }
+
+
+  openModal(title: string, message: string) {
+    this.modalTitle.set(title);
+    this.modalMessage.set(message);
+  }
+
+  closeModal() {
+    this.modalTitle.set(null);
+    this.modalMessage.set(null);
   }
 }
