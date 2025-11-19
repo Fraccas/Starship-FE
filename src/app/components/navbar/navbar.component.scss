@@ -1,12 +1,13 @@
 .navbar {
-  margin: 18px auto;
-  padding: 12px 22px;
+  margin: 18px auto 6px;
+  padding: 14px 24px;
   border-radius: 18px;
   color: #d9e2ef;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 24px;
+  width: min(1180px, 94vw);
 }
 
 .brand {
