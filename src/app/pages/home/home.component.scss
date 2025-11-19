@@ -1,16 +1,22 @@
 .hero {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 28px;
-  padding: 32px 32px 42px;
+  gap: 32px;
+  padding: 34px 34px 44px;
   position: relative;
   overflow: hidden;
+}
+
+.hero-copy {
+  display: grid;
+  gap: 12px;
+  align-content: start;
 }
 
 .hero-copy h1 {
   font-size: clamp(2rem, 3vw, 2.8rem);
   line-height: 1.2;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .hero-copy .accent {
@@ -24,30 +30,31 @@
   color: #9eb7d9;
   font-weight: 700;
   font-size: 0.85rem;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
 }
 
 .hero-copy .subtext {
   color: #b6c7e2;
-  margin-bottom: 18px;
+  margin-bottom: 8px;
 }
 
 .hero-actions {
   display: flex;
   gap: 12px;
   align-items: center;
-  margin-bottom: 14px;
+  margin: 10px 0 8px;
+  flex-wrap: wrap;
 }
 
 .badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
 .hero-visual {
   position: relative;
-  min-height: 260px;
+  min-height: 280px;
 }
 
 .hero-visual .orb {
@@ -100,12 +107,15 @@
 }
 
 .panels {
-  margin-top: 28px;
+  margin-top: 30px;
   display: grid;
-  gap: 18px;
+  gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .panel {
   padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

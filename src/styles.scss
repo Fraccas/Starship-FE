@@ -7,28 +7,43 @@
 }
 
 body, html {
+  min-height: 100%;
   overflow-x: hidden;
-  background: transparent !important;
   font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
   color: #e6eeff;
-}
-
-app-root, app-home, app-navbar {
-  background: transparent !important;
+  background-color: #04060f;
+  color-scheme: dark;
 }
 
 /* 🌌 Soft space gradient behind everything */
 body {
-  background: radial-gradient(circle at 20% 20%, rgba(57, 101, 255, 0.2), transparent 32%),
-              radial-gradient(circle at 82% 14%, rgba(255, 86, 196, 0.14), transparent 28%),
-              radial-gradient(circle at 46% 78%, rgba(93, 253, 255, 0.14), transparent 24%),
-              radial-gradient(120% 120% at 50% 50%, rgba(255, 255, 255, 0.03), transparent 60%),
-              #04060f;
+  background-image: radial-gradient(circle at 20% 20%, rgba(57, 101, 255, 0.2), transparent 32%),
+                    radial-gradient(circle at 82% 14%, rgba(255, 86, 196, 0.14), transparent 28%),
+                    radial-gradient(circle at 46% 78%, rgba(93, 253, 255, 0.14), transparent 24%),
+                    radial-gradient(120% 120% at 50% 50%, rgba(255, 255, 255, 0.03), transparent 60%);
   background-attachment: fixed;
   min-height: 100vh;
 }
 
 /* ⭐ STARFIELDS (3 layers) */
+
+@mixin star-layer($size, $shadow, $drift, $twinkle) {
+  width: $size;
+  height: $size;
+  background: transparent;
+  box-shadow: $shadow;
+  animation: animStar $drift linear infinite, twinkle $twinkle ease-in-out infinite alternate;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 2000px;
+    width: $size;
+    height: $size;
+    background: transparent;
+    box-shadow: inherit;
+  }
+}
 
 .stars,
 .stars2,
@@ -46,9 +61,8 @@ body {
 
 /* ⭐ Layer 1 — Small stars */
 .stars {
-  background: transparent;
-  box-shadow:
-    20px 50px #fff,
+  @include star-layer(1px,
+    (20px 50px #fff,
     80px 120px #fff,
     150px 300px #fff,
     250px 600px #fff,
@@ -66,27 +80,15 @@ body {
     2400px 850px #fff,
     2600px 1900px #fff,
     2800px 1150px #fff,
-    3000px 300px #fff;
-  animation: animStar 65s linear infinite, twinkle 4.2s ease-in-out infinite alternate;
-}
-
-.stars::after {
-  content: "";
-  position: absolute;
-  top: 2000px;
-  width: 1px;
-  height: 1px;
-  background: transparent;
-  box-shadow: inherit;
+    3000px 300px #fff),
+    65s,
+    4.2s);
 }
 
 /* ⭐ Layer 2 — Medium stars */
 .stars2 {
-  width: 2px;
-  height: 2px;
-  background: transparent;
-  box-shadow:
-    50px 200px #fff,
+  @include star-layer(2px,
+    (50px 200px #fff,
     200px 600px #fff,
     400px 900px #fff,
     600px 1300px #fff,
@@ -97,44 +99,23 @@ body {
     1950px 1750px #fff,
     2150px 750px #fff,
     2450px 1400px #fff,
-    2700px 450px #fff;
-  animation: animStar 95s linear infinite, twinkle 5s ease-in-out infinite alternate;
-}
-
-.stars2::after {
-  content: "";
-  position: absolute;
-  top: 2000px;
-  width: 2px;
-  height: 2px;
-  background: transparent;
-  box-shadow: inherit;
+    2700px 450px #fff),
+    95s,
+    5s);
 }
 
 /* ⭐ Layer 3 — Large stars */
 .stars3 {
-  width: 3px;
-  height: 3px;
-  background: transparent;
-  box-shadow:
-    150px 300px #fff,
+  @include star-layer(3px,
+    (150px 300px #fff,
     400px 800px #fff,
     700px 1400px #fff,
     1000px 1800px #fff,
     1350px 1200px #fff,
     1700px 400px #fff,
-    2050px 1600px #fff;
-  animation: animStar 140s linear infinite, twinkle 6.5s ease-in-out infinite alternate;
-}
-
-.stars3::after {
-  content: "";
-  position: absolute;
-  top: 2000px;
-  width: 3px;
-  height: 3px;
-  background: transparent;
-  box-shadow: inherit;
+    2050px 1600px #fff),
+    140s,
+    6.5s);
 }
 
 /* ⭐ Animation: drift upward slowly */
@@ -151,7 +132,7 @@ body {
 
 /* ⭐ Page container spacing */
 .page-container {
-  padding: 60px 72px;
+  padding: clamp(32px, 4vw, 60px) clamp(24px, 5vw, 72px);
   text-align: left;
   z-index: 1;
   position: relative;
@@ -342,7 +323,10 @@ input, textarea {
 }
 
 .content-shell {
-  width: min(1100px, 90vw);
-  margin: 40px auto 80px;
+  width: min(1180px, 94vw);
+  margin: 36px auto 96px;
+  padding-inline: 10px;
   position: relative;
+  display: grid;
+  gap: 28px;
 }
