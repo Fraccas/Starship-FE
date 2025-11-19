@@ -52,7 +52,6 @@ export class AuthService {
       // Validate expiration
       const now = Math.floor(Date.now() / 1000);
       if (decoded.exp && decoded.exp < now) {
-        this.logout();
         return null;
       }
 
