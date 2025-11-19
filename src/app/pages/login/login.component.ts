@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -21,10 +21,15 @@ export class LoginComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  login() {
+  login(form?: NgForm) {
     this.error = '';
 
-    this.auth.login(this.email, this.password).subscribe({
+    if (form && form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
+
+    this.auth.login(this.email.trim(), this.password).subscribe({
       next: (res) => {
         this.auth.saveToken(res.token);
         this.router.navigate(['/']);

@@ -1,21 +1,32 @@
-<h2>Starships</h2>
+<div class="content-shell">
+  <div class="section-heading"><span class="dot"></span><h2>Starships</h2></div>
+  <p class="subtle-text">A curated list of vessels pulled straight from the database. Tap a card to learn more and favorite the ones that inspire you.</p>
 
-<div *ngIf="loading">Loading...</div>
+  <div *ngIf="loading" class="loading">Loading starships...</div>
 
-<div class="grid" *ngIf="!loading">
-  <div class="card" *ngFor="let ship of starships">
-    
-    <h3>{{ ship.name }}</h3>
-    <p><strong>Model:</strong> {{ ship.model }}</p>
-    <p><strong>Class:</strong> {{ ship.starshipClass }}</p>
-    <p><strong>Manufacturer:</strong> {{ ship.manufacturer }}</p>
+  <div class="card-grid" *ngIf="!loading">
+    <div class="card glass-panel" *ngFor="let ship of starships">
+      <div class="card-header">
+        <h3>{{ ship.name }}</h3>
+        <span class="badge">{{ ship.starshipClass || 'Classified' }}</span>
+      </div>
 
-    <!-- Only logged in users can favorite -->
-    <button 
-      *ngIf="auth.isLoggedIn()" 
-      (click)="addFavorite(ship.id)">
-      Add to Favorites
-    </button>
+      <p><strong>Model:</strong> {{ ship.model }}</p>
+      <p><strong>Manufacturer:</strong> {{ ship.manufacturer }}</p>
 
+      <div class="spec-row">
+        <div><small>Hyperdrive</small><span>{{ ship.hyperdriveRating || '—' }}</span></div>
+        <div><small>Crew</small><span>{{ ship.crew || '—' }}</span></div>
+        <div><small>Passengers</small><span>{{ ship.passengers || '—' }}</span></div>
+      </div>
+
+      <button
+        class="button-primary"
+        *ngIf="auth.isLoggedIn()"
+        (click)="addFavorite(ship.id)">
+        Add to Favorites
+      </button>
+      <p *ngIf="!auth.isLoggedIn()" class="subtle-text">Login to save this ship to your hangar.</p>
+    </div>
   </div>
 </div>

@@ -1,12 +1,22 @@
-<div class="login-container">
+<div class="auth-shell glass-panel">
   <h2>Login</h2>
+  <p class="subtle-text">Access your hangar and sync favorites across devices.</p>
 
-  <form (ngSubmit)="login()">
-    <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
-    <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required />
+  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" novalidate>
+    <div class="form-field">
+      <label for="login-email">Email</label>
+      <input id="login-email" type="email" [(ngModel)]="email" name="email" required email #emailCtrl="ngModel" placeholder="you@galaxy.com" />
+      <div class="form-hint" *ngIf="emailCtrl.invalid && emailCtrl.touched">Please enter a valid email.</div>
+    </div>
 
-    <button type="submit">Login</button>
+    <div class="form-field">
+      <label for="login-password">Password</label>
+      <input id="login-password" type="password" [(ngModel)]="password" name="password" required minlength="6" #passCtrl="ngModel" placeholder="••••••" />
+      <div class="form-hint" *ngIf="passCtrl.invalid && passCtrl.touched">Password must be at least 6 characters.</div>
+    </div>
+
+    <button type="submit" class="button-primary" [disabled]="loginForm.invalid">Login</button>
   </form>
 
-  <p class="error" *ngIf="error">{{ error }}</p>
+  <p class="form-hint" *ngIf="error">{{ error }}</p>
 </div>

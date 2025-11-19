@@ -1,0 +1,41 @@
+.loading {
+  padding: 24px;
+  color: #a9b9d5;
+}
+
+.toolbar {
+  margin: 12px 0 18px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.table-wrap {
+  overflow: hidden;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.button-ghost.danger {
+  border-color: rgba(255, 119, 119, 0.3);
+  color: #ffc3c3;
+}
+
+.editor {
+  margin-top: 22px;
+  padding: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px 18px;
+}
+
+.buttons {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+}

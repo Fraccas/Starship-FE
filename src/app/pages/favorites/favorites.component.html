@@ -1,24 +1,32 @@
-<h2>Your Favorite Starships</h2>
+<div class="content-shell">
+  <div class="section-heading"><span class="dot"></span><h2>Your Favorite Starships</h2></div>
+  <p class="subtle-text">Personalize your hangar with nicknames and notes so you can revisit the ships that matter most.</p>
 
-<div *ngIf="loading">Loading...</div>
+  <div *ngIf="loading" class="loading">Loading favorites...</div>
 
-<div *ngIf="!loading && favorites.length === 0">
-  <p>You don't have any favorites yet.</p>
-</div>
+  <div *ngIf="!loading && favorites.length === 0" class="glass-panel empty">
+    <p>You don't have any favorites yet. Start browsing and add some starships to your collection.</p>
+    <a routerLink="/starships" class="button-primary">Explore Starships</a>
+  </div>
 
-<div class="grid" *ngIf="favorites.length > 0">
-  <div class="card" *ngFor="let fav of favorites">
-    <h3>{{ fav.starship.name }}</h3>
+  <div class="card-grid" *ngIf="favorites.length > 0">
+    <div class="card glass-panel" *ngFor="let fav of favorites">
+      <div class="card-header">
+        <div>
+          <h3>{{ fav.starship.name }}</h3>
+          <p class="subtle-text">{{ fav.starship.model }}</p>
+        </div>
+        <span class="badge">{{ fav.starship.starshipClass }}</span>
+      </div>
 
-    <p><strong>Nickname:</strong> {{ fav.nickname || '—' }}</p>
-    <p><strong>Notes:</strong> {{ fav.notes || '—' }}</p>
+      <p><strong>Nickname:</strong> {{ fav.nickname || '—' }}</p>
+      <p><strong>Notes:</strong> {{ fav.notes || '—' }}</p>
 
-    <p><strong>Class:</strong> {{ fav.starship.starshipClass }}</p>
-    <p><strong>Model:</strong> {{ fav.starship.model }}</p>
-    <p><strong>Manufacturer:</strong> {{ fav.starship.manufacturer }}</p>
+      <p><strong>Manufacturer:</strong> {{ fav.starship.manufacturer }}</p>
 
-    <button (click)="removeFavorite(fav.id)">
-      Remove from Favorites
-    </button>
+      <button class="button-ghost" (click)="removeFavorite(fav.id)">
+        Remove from Favorites
+      </button>
+    </div>
   </div>
 </div>

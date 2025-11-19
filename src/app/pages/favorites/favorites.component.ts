@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { FavoriteStarshipService } from '../../core/services/favorite-starship.service';
 import { FavoriteStarship } from '../../core/models/favorite-starship';
 
 @Component({
   selector: 'app-favorites',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss'
 })
