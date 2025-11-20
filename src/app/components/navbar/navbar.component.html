@@ -9,6 +9,7 @@
 
   <div class="links">
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/docs" routerLinkActive="active">Docs</a>
     <a routerLink="/starships" routerLinkActive="active">Starships</a>
     <a routerLink="/favorites" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Favorites</a>
     <a routerLink="/admin" routerLinkActive="active" *ngIf="auth.isAdmin()">Admin</a>
