@@ -11,6 +11,12 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
 
   {
+    path: 'docs',
+    loadComponent: () =>
+      import('./pages/docs/docs.component').then(m => m.DocsComponent)
+  },
+
+  {
     path: 'starships',
     loadComponent: () =>
       import('./pages/starships/starships.component').then(m => m.StarshipsComponent)

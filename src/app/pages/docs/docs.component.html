@@ -1,0 +1,86 @@
+<section class="docs">
+  <header class="page-header glass-panel">
+    <div>
+      <p class="eyebrow">Project docs</p>
+      <h1>Starship Explorer Documentation</h1>
+      <p class="lede">Front-end + backend notes, deployment recipes, and tooling credits — all in one place.</p>
+    </div>
+    <div class="meta">
+      <p class="chip">Angular 19</p>
+      <p class="chip">.NET 8</p>
+      <p class="chip">Docker</p>
+      <p class="chip">Azure</p>
+    </div>
+  </header>
+
+  <div class="grid">
+    <article class="glass-panel">
+      <h2>Frontend overview</h2>
+      <ul>
+        <li><strong>Features:</strong> authentication with JWT storage, admin-aware routing, starship browsing with search/filter, favorites, and responsive glass UI.</li>
+        <li><strong>Stack:</strong> Angular 19 standalone components, TypeScript, SCSS, router + HttpClient, JWT interceptor.</li>
+        <li><strong>Auth flow:</strong> login/register ➜ backend issues JWT ➜ stored in <code>localStorage</code> ➜ interceptor adds <code>Authorization</code> header ➜ guards gate protected routes ➜ navbar reacts to session state.</li>
+      </ul>
+    </article>
+
+    <article class="glass-panel">
+      <h2>Getting started locally</h2>
+      <ol>
+        <li>Install prerequisites: Node.js 20+, npm 10+, and optionally the Angular CLI.</li>
+        <li>Install deps: <code>npm install</code>.</li>
+        <li>Create <code>src/environments/environment.ts</code> and <code>environment.prod.ts</code> with your API base URL.</li>
+        <li>Run the dev server: <code>npm start</code> (served at <code>http://localhost:4200</code>).</li>
+        <li>Tests & builds: <code>npm test</code> and <code>npm run build</code>.</li>
+      </ol>
+      <p class="note">App structure: <code>src/app/core</code> for guards/services/interceptors, <code>src/app/pages</code> for features, and <code>src/app/shared</code> for reusable UI.</p>
+    </article>
+
+    <article class="glass-panel">
+      <h2>Backend quick facts</h2>
+      <ul>
+        <li><strong>Platform:</strong> ASP.NET Core 8 + Entity Framework Core.</li>
+        <li><strong>Database:</strong> SQLite when containerized; migrations + seeding supported.</li>
+        <li><strong>Auth:</strong> Identity + JWT with roles (user/admin).</li>
+        <li><strong>Key endpoints:</strong> <code>/api/starship</code> (data), <code>/api/auth/login</code>, <code>/api/ai/ask</code> (OpenAI-powered responses).</li>
+      </ul>
+    </article>
+
+    <article class="glass-panel">
+      <h2>Docker workflow (backend)</h2>
+      <ol>
+        <li><strong>Build image:</strong> <code>docker build -t starshipapi .</code> from the <code>StarShipApi</code> folder.</li>
+        <li><strong>Persist DB:</strong> create volume <code>docker volume create starshipsdb</code>; SQLite lives at <code>/app/starships.db</code>.</li>
+        <li><strong>Seed:</strong> <code>docker run --rm -it -v starshipsdb:/app -e ASPNETCORE_ENVIRONMENT=Production -e OpenAI__Key="..." starshipapi dotnet StarShipApi.dll --seed</code>.</li>
+        <li><strong>Run API:</strong> <code>docker run -d -p 8080:8080 -v starshipsdb:/app -e OpenAI__Key="..." --name starshipapi-container starshipapi</code>.</li>
+        <li><strong>Reset:</strong> remove the volume (<code>docker volume rm starshipsdb</code>) to wipe data.</li>
+      </ol>
+      <p class="note">The image uses a multi-stage Dockerfile, applies migrations during build, and delegates startup/seeding logic to <code>entrypoint.sh</code>.</p>
+    </article>
+
+    <article class="glass-panel">
+      <h2>Azure deployment (containerized backend)</h2>
+      <ol>
+        <li>Build + tag: <code>docker build -t starshipapi .</code> then <code>docker tag starshipapi &lt;acr&gt;.azurecr.io/starshipapi:latest</code>.</li>
+        <li>Push to ACR: login (<code>az acr login</code>) then <code>docker push</code>.</li>
+        <li>App Service config: clear <code>linuxFxVersion</code> if needed, then set container with <code>--docker-custom-image-name</code> and admin credentials (avoid managed identity flags).</li>
+        <li>Database: SQLite persists at <code>/home/site/wwwroot/starships.db</code>; production auto-migration + seeding runs inside <code>Program.cs</code>.</li>
+        <li>Redeploy flow: rebuild, retag, push, then <code>az webapp restart</code>; check logs via <code>az webapp log tail</code>.</li>
+      </ol>
+      <p class="note">On Azure, command-line args and <code>entrypoint.sh</code> are ignored, so the app self-migrates/seeds on startup.</p>
+    </article>
+
+    <article class="glass-panel">
+      <h2>Environment keys</h2>
+      <ul>
+        <li><strong>Frontend:</strong> set <code>apiUrl</code> in the Angular environment files to point at your backend host.</li>
+        <li><strong>Backend:</strong> set <code>OpenAI__Key</code> for AI endpoints and seeding, plus any JWT/Identity secrets configured in the API.</li>
+      </ul>
+    </article>
+
+    <article class="glass-panel">
+      <h2>Credits</h2>
+      <p>Docs, visuals, and supporting assets were created with help from OpenAI's Codex and ChatGPT.</p>
+      <p class="note">Have ideas or fixes? Check the <a routerLink="/admin">Admin</a> area (for authorized users) or open an issue in the repo.</p>
+    </article>
+  </div>
+</section>
