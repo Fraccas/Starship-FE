@@ -2,59 +2,75 @@
   <div class="section-heading"><span class="dot"></span>
     <h2>Starships</h2>
   </div>
-  <p class="subtle-text">A curated list of vessels pulled straight from the database. 
+  <p class="subtle-text">A curated list of vessels pulled straight from the database.
     Favorite the ones that inspire you and ask questions about those that interest you.</p>
 
   <div *ngIf="loading" class="loading">Loading starships...</div>
 
-  <div class="filter-bar glass-panel">
-    <input #searchBox type="text" placeholder="Search starships..." (input)="searchTerm.set(searchBox.value)" />
-
-    <select #sortBox (change)="sortOption.set(sortBox.value)">
-      <option value="name-asc">Name (A → Z)</option>
-      <option value="name-desc">Name (Z → A)</option>
-      <option value="crew-asc">Crew (Low → High)</option>
-      <option value="crew-desc">Crew (High → Low)</option>
-      <option value="hyperdrive-asc">Hyperdrive (Slow → Fast)</option>
-      <option value="hyperdrive-desc">Hyperdrive (Fast → Slow)</option>
-    </select>
-
-  </div>
-
-
-
-  <div class="card-grid" *ngIf="!loading">
-    <div class="card glass-panel" *ngFor="let ship of filteredStarships()">
-      <div class="card-header">
-        <h3>{{ ship.name }}</h3>
-        <span class="badge">{{ ship.starship_class || 'Classified' }}</span>
-      </div>
-
-      <p><strong>Model:</strong> {{ ship.model }}</p>
-      <p><strong>Manufacturer:</strong> {{ ship.manufacturer }}</p>
-
-      <div class="spec-row">
-        <div><small>Hyperdrive</small><span>{{ ship.hyperdrive_rating || '—' }}</span></div>
-        <div><small>Crew</small><span>{{ ship.crew || '—' }}</span></div>
-        <div><small>Passengers</small><span>{{ ship.passengers || '—' }}</span></div>
-      </div>
-
-      <button class="button-primary" *ngIf="auth.isLoggedIn()" (click)="addFavorite(ship.id)">
-        Add to Favorites
-      </button>
-      <p *ngIf="!auth.isLoggedIn()" class="subtle-text">Login to save this ship to your hangar.</p>
-
-      <div class="ai-section" *ngIf="auth.isLoggedIn()">
-        <input type="text" placeholder="Ask about {{ ship.name }}..." [(ngModel)]="shipQuestions[ship.id]" />
-        <button class="button-ghost" (click)="askAi(ship.id, ship.name)">
-          Ask AI
-        </button>
-
-        <p class="ai-answer" *ngIf="aiAnswers[ship.id]">
-          {{ aiAnswers[ship.id] }}
-        </p>
-      </div>
+  <div class="table-wrapper glass-panel" *ngIf="!loading">
+    <div class="table-controls">
+      <input
+        type="text"
+        placeholder="Search starships..."
+        [value]="searchTerm()"
+        (input)="searchTerm.set($any($event.target).value)" />
     </div>
+
+    <table class="starship-table">
+      <thead>
+        <tr>
+          <th class="sortable" (click)="toggleSort('name')">
+            Name
+            <span class="sort-indicator" [class.active]="isSorted('name')">{{ getSortSymbol('name') }}</span>
+          </th>
+          <th class="sortable" (click)="toggleSort('class')">
+            Class
+            <span class="sort-indicator" [class.active]="isSorted('class')">{{ getSortSymbol('class') }}</span>
+          </th>
+          <th class="sortable" (click)="toggleSort('crew')">
+            Crew
+            <span class="sort-indicator" [class.active]="isSorted('crew')">{{ getSortSymbol('crew') }}</span>
+          </th>
+          <th class="sortable" (click)="toggleSort('hyperdrive')">
+            Hyperdrive
+            <span class="sort-indicator" [class.active]="isSorted('hyperdrive')">{{ getSortSymbol('hyperdrive') }}</span>
+          </th>
+          <th>Model</th>
+          <th>Manufacturer</th>
+          <th class="actions-col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ship of filteredStarships()">
+          <td>
+            <div class="ship-name">{{ ship.name }}</div>
+          </td>
+          <td>{{ ship.starship_class || 'Classified' }}</td>
+          <td>{{ ship.crew || '—' }}</td>
+          <td>{{ ship.hyperdrive_rating || '—' }}</td>
+          <td class="muted">{{ ship.model || '—' }}</td>
+          <td class="muted">{{ ship.manufacturer || '—' }}</td>
+          <td class="actions-col">
+            <button class="button-primary" *ngIf="auth.isLoggedIn()" (click)="addFavorite(ship.id)">
+              Add to Favorites
+            </button>
+            <p *ngIf="!auth.isLoggedIn()" class="subtle-text">Login to save this ship to your hangar.</p>
+
+            <div class="ai-section" *ngIf="auth.isLoggedIn()">
+              <input type="text" placeholder="Ask about {{ ship.name }}..." [(ngModel)]="shipQuestions[ship.id]" />
+              <div class="ai-actions">
+                <button class="button-ghost" (click)="askAi(ship.id, ship.name)">
+                  Ask AI
+                </button>
+                <p class="ai-answer" *ngIf="aiAnswers[ship.id]">
+                  {{ aiAnswers[ship.id] }}
+                </p>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

@@ -65,10 +65,33 @@ export class StarshipsComponent implements OnInit {
       case 'hyperdrive-desc':
         list.sort((a, b) => (Number(b.hyperdrive_rating) || 0) - (Number(a.hyperdrive_rating) || 0));
         break;
+      case 'class-asc':
+        list.sort((a, b) => (a.starship_class || '').localeCompare(b.starship_class || ''));
+        break;
+      case 'class-desc':
+        list.sort((a, b) => (b.starship_class || '').localeCompare(a.starship_class || ''));
+        break;
     }
 
     return list;
   });
+
+  toggleSort(column: 'name' | 'class' | 'crew' | 'hyperdrive') {
+    const [currentColumn, direction] = this.sortOption().split('-');
+    const nextDirection = currentColumn === column && direction === 'asc' ? 'desc' : 'asc';
+    this.sortOption.set(`${column}-${nextDirection}`);
+  }
+
+  isSorted(column: string) {
+    const [currentColumn] = this.sortOption().split('-');
+    return currentColumn === column;
+  }
+
+  getSortSymbol(column: string) {
+    const [currentColumn, direction] = this.sortOption().split('-');
+    if (currentColumn !== column) return '↕';
+    return direction === 'asc' ? '↑' : '↓';
+  }
 
   constructor(
     private starshipService: StarshipService,
