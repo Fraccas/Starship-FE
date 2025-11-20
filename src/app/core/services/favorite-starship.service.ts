@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FavoriteStarship } from '../models/favorite-starship';
+import { API_BASE_URL } from '../constants/api';
 
 @Injectable({ providedIn: 'root' })
 export class FavoriteStarshipService {
 
-  private api = 'https://localhost:7233/api/favoritestarship';
+  private api = `${API_BASE_URL}/favoritestarship`;
 
   constructor(private http: HttpClient) {}
 

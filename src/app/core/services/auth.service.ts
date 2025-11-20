@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginResponse } from '../models/user';
 import { jwtDecode } from 'jwt-decode';
+import { API_BASE_URL } from '../constants/api';
 
 export interface DecodedToken {
   email: string;
@@ -11,7 +12,7 @@ export interface DecodedToken {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private api = 'https://localhost:7233/api/auth';
+  private api = `${API_BASE_URL}/auth`;
 
   // Hold raw JWT
   token = signal<string | null>(localStorage.getItem('token'));

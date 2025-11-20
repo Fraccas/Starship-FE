@@ -6,6 +6,7 @@ import { FavoriteStarshipService } from '../../core/services/favorite-starship.s
 import { AuthService } from '../../core/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { API_BASE_URL } from '../../core/constants/api';
 
 @Component({
   selector: 'app-starships',
@@ -99,7 +100,7 @@ export class StarshipsComponent implements OnInit {
 
     this.aiAnswers[id] = "Thinking...";
 
-    this.http.post<any>("https://localhost:7233/api/ai/starship-question", {
+    this.http.post<any>(`${API_BASE_URL}/ai/starship-question`, {
       starshipId: id,
       starshipName: name,
       question
