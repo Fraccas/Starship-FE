@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Starship } from '../models/starship';
 import { Observable } from 'rxjs';
+import { API_BASE_URL } from '../constants/api';
 
 @Injectable({ providedIn: 'root' })
 export class StarshipService {
-  private api = 'https://localhost:7233/api/starship';
+  private api = `${API_BASE_URL}/starship`;
 
   constructor(private http: HttpClient) {}
 
