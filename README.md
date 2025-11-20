@@ -13,6 +13,7 @@ Angular single-page app for browsing, searching, and favoriting Star Wars–styl
 - [Available Scripts](#available-scripts)
 - [Project Structure](#project-structure)
 - [Authentication Flow](#authentication-flow)
+- [CI/CD Deployment](#cicd-deployment)
 
 ---
 
@@ -103,3 +104,10 @@ src/
 4. An HTTP interceptor adds `Authorization: Bearer <token>` to API calls.
 5. Guards verify authentication/admin roles before activating protected routes.
 6. Navbar updates reactively based on the auth state.
+
+## CI/CD Deployment
+- **Workflow**: `.github/workflows/deploy.yml` builds the Angular app into a Docker image, tags it as `starshipui:latest`, pushes it to Azure Container Registry, then updates and restarts the Azure Web App container.
+- **Trigger**: Pushes to the `main` branch.
+- **Environment variables**: Set in the workflow for ACR name (`ACR_NAME`), resource group (`RESOURCE_GROUP`), and target web app name (`FRONTEND_APP`).
+- **Required secret**: `AZURE_CREDENTIALS` (service principal JSON with access to ACR and the Web App). See the Azure Login GitHub Action docs for the expected schema.
+- **Manual execution**: You can run the workflow from the Actions tab to force a redeploy; ensure the `main` branch has the desired code before dispatching.
