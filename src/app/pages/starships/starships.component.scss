@@ -172,3 +172,60 @@
     transform: translate(-50%, -50%);
   }
 }
+
+/* Make sure table cells behave like table cells */
+.starship-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.starship-table thead {
+  display: table-header-group !important;
+}
+
+.starship-table thead tr {
+  display: table-row !important;
+}
+
+.starship-table thead th {
+  display: table-cell !important;
+  vertical-align: middle;
+  white-space: nowrap;
+  padding: 12px 16px;
+  font-weight: 600;
+}
+
+/* Prevent columns from shrinking into weird stacked blocks */
+.starship-table th,
+.starship-table td {
+  max-width: none !important;
+  width: auto !important;
+}
+
+/* Fix sort indicator spacing */
+.sortable {
+  position: relative;
+}
+
+.sort-indicator {
+  margin-left: 6px;
+  opacity: 0.7;
+}
+
+/* Ensure search bar stays separate from the header */
+.table-controls {
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.table-controls input {
+  width: 240px;
+}
+
+.starship-table thead th {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(4px);
+}
+
