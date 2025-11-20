@@ -4,12 +4,27 @@
       <p class="eyebrow">Project docs</p>
       <h1>Starship Explorer Documentation</h1>
       <p class="lede">Front-end + backend notes, deployment recipes, and tooling credits — all in one place.</p>
+
+      <div class="callout warn">
+        <div class="callout__icon">⚠️</div>
+        <div>
+          <p class="callout__title">Mobile coverage</p>
+          <p class="callout__body">This page hasn’t been tested on mobile yet — best viewed on desktop or tablet.</p>
+        </div>
+      </div>
+
+      <div class="pill-row">
+        <span class="pill">Angular 19</span>
+        <span class="pill">.NET 8</span>
+        <span class="pill">Docker</span>
+        <span class="pill">Azure</span>
+      </div>
     </div>
     <div class="meta">
-      <p class="chip">Angular 19</p>
-      <p class="chip">.NET 8</p>
-      <p class="chip">Docker</p>
-      <p class="chip">Azure</p>
+      <p class="chip">Updated weekly</p>
+      <p class="chip">Glass UI</p>
+      <p class="chip">API-first</p>
+      <p class="chip">Nightly builds</p>
     </div>
   </header>
 
@@ -33,6 +48,17 @@
         <li>Tests & builds: <code>npm test</code> and <code>npm run build</code>.</li>
       </ol>
       <p class="note">App structure: <code>src/app/core</code> for guards/services/interceptors, <code>src/app/pages</code> for features, and <code>src/app/shared</code> for reusable UI.</p>
+    </article>
+
+    <article class="glass-panel highlight">
+      <h2>CI/CD workflow</h2>
+      <ol class="timeline">
+        <li><strong>Push & PR:</strong> GitHub Actions lint, unit test, and build the Angular app plus backend API.</li>
+        <li><strong>Artifacts:</strong> Frontend build output is archived; backend publishes a Docker image tagged with the commit SHA.</li>
+        <li><strong>Quality gates:</strong> Required checks gate PR merges; release branches trigger integration smoke tests.</li>
+        <li><strong>Delivery:</strong> Images are pushed to ACR; the web app deploys via Azure App Service slots with warm-up pings before swap.</li>
+      </ol>
+      <p class="note">Secrets stay in GitHub/Azure vaults, and every deployment emits trace IDs for easier log correlation.</p>
     </article>
 
     <article class="glass-panel">
